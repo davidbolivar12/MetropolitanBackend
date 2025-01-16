@@ -59,7 +59,18 @@ router.put('/', (req, res)=>{
             return res.status(404).json({ error: "Vehiculo no encontrado"})
         }
         res.json({message: "Vechiculo actualizado"})
-    })
-})
+    });
+});
+
+router.delete('/', (req, res) => {
+    const { id } = req.query;
+    db.query('DELETE FROM vehiculos WHERE id_vehiculo = ?',
+        [id],
+        (err, response) => {
+            if (err) return res.status(500).json({ error: err.message });
+            if(response.affectedRows === 0) return res.status(404).json({ error: "No se ha encontrado el id"})
+            res.json({ message: 'repuesto eliminado' });
+        });
+});
 
 module.exports = router;
