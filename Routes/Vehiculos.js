@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     const { maletas, pasajeros } = req.query;
 
     if (maletas && pasajeros) {
-        db.query("SELECT * FROM vehiculos WHERE capacidad_maletas <= ? AND capacidad_pasajeros <= ?", [maletas, pasajeros], (err, response) => {
+        db.query("SELECT * FROM vehiculos WHERE capacidad_maletas >= ? AND capacidad_pasajeros >= ?", [maletas, pasajeros], (err, response) => {
             if (err) {
                 return res.status(500).json({ error: "Error al obtener los vehiculos" });
             }
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
     if (pasajeros) {
         console.log(pasajeros);
-        db.query("SELECT * FROM vehiculos WHERE capacidad_pasajeros <= ?", [pasajeros], (err, response) => {
+        db.query("SELECT * FROM vehiculos WHERE capacidad_pasajeros >= ?", [pasajeros], (err, response) => {
             if (err) {
                 return res.status(500).json({ error: "Error al obtener los vehiculos" });
             }
@@ -35,7 +35,16 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res)=>{
-    const 
-})
+
+    const {modelo, anio, capacidad_pasajeros, capacidad_maletas, tipo_vehiculo} = req.body;
+    db.query('INSERT INTO vehiculos (modelo, anio, capacidad_pasajeros, capacidad_maletas, tipo_vehiculo) VALUES (?, ?, ?, ?, ?)', [modelo, anio, capacidad_pasajeros, capacidad_maletas, tipo_vehiculo], (err, response)=>{
+        if(err){
+            return res.status(500).json({ error: "Error en el servidor"});
+        }if(response.affectedRows === 0){
+            return res.status(404).json({ error: "Error al agregar el vehiculo"});
+        }
+        res.json({ message: "vehiculo agregado exitosamente"});
+    });
+});
 
 module.exports = router;
