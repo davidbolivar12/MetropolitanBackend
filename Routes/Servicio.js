@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../conexion');
 
-// Obtener servicios (todos o por ID)
 router.get('/', (req, res) => {
     const { id } = req.query;
 
@@ -26,7 +25,6 @@ router.get('/', (req, res) => {
     }
 });
 
-// Crear un nuevo servicio
 router.post('/', (req, res) => {
     let { NombreServicio } = req.body;
 
@@ -65,7 +63,6 @@ router.post('/', (req, res) => {
     });
 });
 
-// Actualizar un servicio por ID
 router.put('/', (req, res) => {
     const { id } = req.query;
     let { NombreServicio } = req.body;
@@ -119,7 +116,6 @@ router.put('/', (req, res) => {
     });
 });
 
-// Eliminar un servicio por ID
 router.delete('/', (req, res) => {
     const { id } = req.query;
 
