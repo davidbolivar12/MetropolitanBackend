@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use("/API/vehiculo", require("./Routes/Vehiculo.js"));
 app.use("/API/marca", require("./Routes/Marca.js"));
-
+app.use("/API/modelo", require("./Routes/Modelo.js"));
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
